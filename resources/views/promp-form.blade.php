@@ -8,7 +8,14 @@
 </head>
 <body class="p-3">
    <div class="w-7xl mx-auto h-screen flex px-50  flex-col bg-gray-100 py-3 rounded-sm border-1 border-blue-300" style="justify-content: center; align-items: center;">
-    <div class="mb-4"><h1 class="text-4xl pt-4">Open AI Form</h1></div>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <div>
+            <img src="https://static-00.iconduck.com/assets.00/openai-icon-2021x2048-4rpe5x7n.png" alt="Logo" class="w-10 h-10 rounded-full mx-auto mb-4 object-fill" />
+        </div>
+        <div>
+            <h1 class="text-3xl pt-4">Open AI Form</h1>
+        </div>
+    </div>
     <form class="block w-full" method="POST" action="{{ route('chat') }}" enctype="multipart/form-data">
         @csrf
         @method('POST')
