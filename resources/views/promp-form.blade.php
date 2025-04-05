@@ -4,38 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     @vite('resources/css/app.css')
+    
 </head>
-<body class="p-3">
-   <div class="w-7xl mx-auto h-screen flex px-50  flex-col bg-gray-100 py-3 rounded-sm border-1 border-blue-300" style="justify-content: center; align-items: center;">
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <div>
-            <img src="https://static-00.iconduck.com/assets.00/openai-icon-2021x2048-4rpe5x7n.png" alt="Logo" class="w-10 h-10 rounded-full mx-auto mb-4 object-fill" />
-        </div>
-        <div>
-            <h1 class="text-3xl pt-4">Open AI Form with <span class="italic">GPT-4o-mini</span></h1>
-        </div>
-    </div>
-    <form class="block w-full" method="POST" action="{{ route('chat') }}" enctype="multipart/form-data">
-        @csrf
-        @method('POST')
-        {{-- prompt  --}}
-        <div class="mb-4 w-full">
-            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Write Serivce Prompt</label>
-            <textarea id="prompt" name="prompt" class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-1 border-blue-200" required></textarea>
-        </div>
+<body class="p-3 h-full">
 
-        {{-- logo  --}}
-        <div class="mb-4 w-full">
-            <label for="logo" class="block text-gray-700 text-sm font-bold mb-2">Logo</label>
-            <input id="logo" type="file" name="logo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-200" required />
-        </div>
+    {{-- star  --}}
+    <section class="w-3xl p-3 mx-auto border border-cyan-300 mt-3 rounded-sm shadow-sm">
+        {{-- heading  --}}
+            <div class="text-center mb-3"><h4 class="text-2xl">GPT Prompt</h4></div>
+            {{-- form  --}}
+        <div>
+            <form action="{{ route('chat') }}" method="POST"  enctype="multipart/form-data" id ="prompt-form">
+            @csrf
+            @method('POST')
+                {{-- input  --}}
+            <div class="w-full mb-4">
+                <label for="prompt" class="block text-gray-700 text-sm font-bold mb-2">Write Service Prompt</label>
+                <textarea class="focus:outline-0 block w-full px-2 py-3 rounded-sm shadow-sm shadow-cyan-300" id="prompt" name="prompt" placeholder="prompt goes here..."></textarea> 
+            </div>
+            
+            {{-- file upload  --}}
+            <div class="w-full mb-4">
+                <label for="prompt" class="block text-gray-700 text-sm font-bold mb-2">Upload Logo</label>
+                <input type="file" class="block w-full px-2 py-3 rounded-sm shadow-sm" id="logo" name="logo" name="prompt" placeholder="prompt goes here..." /> 
+            </div>
 
-        {{-- image  --}}
-        <div class="w-full">
-        <input type="submit" value="Generate" class="bg-blue-500 hover:bg-blue-500 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline block w-full" />
+            {{-- submit button  --}}
+            <div class="w-full mb-4">
+                <input type="submit" value="Generate" class="bg-blue-500 hover:bg-blue-500 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline block w-full" />
+            </form>
+
+            <div class="my-5 border border-cyan-300"></div>
+
+            {{-- display response  --}}
+            @if(session('message'))
+            <div class="border border-cyan-300 p-3 rounded-sm">
+                <div class="w-full flex justify-between">
+                    <div>
+                        @if(session('logo_url'))
+                        <img src="{{ session('logo_url') }}" alt="Logo" class="w-20 h-20 rounded-full mx-auto mb-4 object-fill">
+                        @endif
+                    </div>
+                    <div class="text-center mb-3 flex items-center justify-center">
+                        <h4 class="text-2xl">Response</h4>
+                    </div>
+                </div>
+                <div class="w-full mb-3" contenteditabl="true">
+                    {{ Str::of(session('message'))->toHtmlString(); }}                    
+                </div>
+
+                {{-- download button  --}}
+                <a href="{{ route('pdf', ['promptId' => session('promptId') ? session('promptId') : '' ]) }}" class="shadow-sm shadow-cyan-300 py-2 px-3 rounded-sm">Download File</a>
+            </div>
+            @endif
         </div>
-        </form>    
-   </div>
+    </section>
+    {{-- end --}}
+
+    {{-- js  --}}
+    <script>
+        
+        // $(document).ready(function(){
+        //     $('#prompt-form').on('submit', function(e){
+        //         e.preventDefault();
+        //         const formData = new FormData(this);
+        //         $.ajax({
+        //             type: 'POST',
+        //             url: '{{ route('chat') }}',
+        //             headers: {
+        //                 'X-CSRF-TOKEN': '{{ csrf_token() }}' // Add CSRF token here
+        //             },
+        //             data: formData,
+        //             contentType: false,
+        //             processData: false,
+        //             success: function(response){
+        //                 console.log(response);
+        //                 $('.border').removeClass('hidden');
+        //                 $('.border .w-full').html(response.message);
+        //             },
+        //             error: function(error){
+        //                 console.log(error);
+        //             }
+        //         });
+        //     });
+        // });
+    </script>
 </body>
 </html>

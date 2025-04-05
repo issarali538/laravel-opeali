@@ -14,8 +14,10 @@
             </div>
         </div>
         <div class="w-full mb-3" contenteditabl="true">
-            {{ Str::of(session('message'))->toHtmlString(); }}                    
+            <p>
+                {{ Str::of($content)->toHtmlString(); }}                    
+            </p>
         </div>
     </div>
 </body>
-
+</html>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use PDF;
 
 class ChatController extends Controller
 {
@@ -34,8 +36,39 @@ class ChatController extends Controller
         $logoPath = $request->file('logo')->store('logos', 'public');
         $logoUrl = asset('storage/' . $logoPath);
 
+        
         $responseData = $response->json();
         $message = $responseData['choices'][0]['message']['content'] ?? 'No response from OpenAI';
-        return view('prompt-view',["message" => $message, "logo" => $logoUrl]);
+        
+        // Save the prompt and logo URL to the database
+        $chatData = Chat::create([
+            'prompt' => $message,
+            'logo' => $logoUrl,
+        ]);
+
+        return redirect()->back()->with([
+            'message' => $message,
+            'logo_url' => $logoUrl,
+            'promptId' => $chatData->id,
+        ]);
+    }
+
+    public function pdfGenerator(string $promptId)
+    {
+
+        
+        // $promptId = $request->input('promptId');
+        $chat = Chat::find($promptId);
+        if (!$chat) {
+            return response()->json(['error' => 'Chat not found'], 404);
+        }
+
+        $data = [
+            'content' => $chat->prompt,
+        ];
+
+        // Load the view and pass data
+        $pdf = PDF::loadView('pdf.pdf-view', $data);
+        return $pdf->download('invoice.pdf');
     }
 }
