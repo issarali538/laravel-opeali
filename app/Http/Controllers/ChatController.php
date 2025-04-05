@@ -19,7 +19,7 @@ class ChatController extends Controller
             'Authorization' => 'Bearer ' . $apiKey,
             "Content-Type" => "application/json",
         ])->post('https://api.openai.com/v1/chat/completions', [
-           'model' => 'gpt-3.5-turbo',
+           'model' => 'gpt-4o',
             'messages' => [
                 ['role' => 'user', 'content' => $request->input('prompt')],
             ],
@@ -37,6 +37,5 @@ class ChatController extends Controller
         $responseData = $response->json();
         $message = $responseData['choices'][0]['message']['content'] ?? 'No response from OpenAI';
         return view('prompt-view',["message" => $message, "logo" => $logoUrl]);
-        // return $message;
     }
 }
