@@ -13,7 +13,7 @@
             <img src="https://static-00.iconduck.com/assets.00/openai-icon-2021x2048-4rpe5x7n.png" alt="Logo" class="w-10 h-10 rounded-full mx-auto mb-4 object-fill" />
         </div>
         <div>
-            <h1 class="text-3xl pt-4">Open AI Form</h1>
+            <h1 class="text-3xl pt-4">Open AI Form with <span class="italic">GPT-4o</span></h1>
         </div>
     </div>
     <form class="block w-full" method="POST" action="{{ route('chat') }}" enctype="multipart/form-data">
