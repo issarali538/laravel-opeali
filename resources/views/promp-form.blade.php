@@ -33,7 +33,7 @@
 
         {{-- image  --}}
         <div class="w-full">
-        <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-500 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline block w-full" />
+        <input type="submit" value="Generate" class="bg-blue-500 hover:bg-blue-500 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline block w-full" />
         </div>
         </form>    
    </div>
