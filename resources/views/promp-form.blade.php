@@ -8,7 +8,7 @@
 </head>
 <body class="p-3">
    <div class="w-7xl mx-auto h-screen flex px-50  flex-col bg-gray-100 py-3 rounded-sm border-1 border-blue-300" style="justify-content: center; align-items: center;">
-    <div class="mb-4"><h1 class="text-2xl pt-4">Open AI Form</h1></div>
+    <div class="mb-4"><h1 class="text-4xl pt-4">Open AI Form</h1></div>
     <form class="block w-full" method="POST" action="{{ route('chat') }}" enctype="multipart/form-data">
         @csrf
         @method('POST')
