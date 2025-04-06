@@ -53,22 +53,17 @@ class ChatController extends Controller
         ]);
     }
 
-    public function pdfGenerator(string $promptId)
-    {
-
-        
-        // $promptId = $request->input('promptId');
-        $chat = Chat::find($promptId);
-        if (!$chat) {
+    public function pdfGenerator(Chat $chat)
+    {        
+        $chatData = $chat::findOrFail($chat->id);
+        if (!$chatData) {
             return response()->json(['error' => 'Chat not found'], 404);
         }
 
         $data = [
             'content' => $chat->prompt,
         ];
-
-        // Load the view and pass data
         $pdf = PDF::loadView('pdf.pdf-view', $data);
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('offer-report.pdf');
     }
 }

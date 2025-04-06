@@ -7,4 +7,4 @@ Route::view('/', "promp-form");
 
 Route::post('/chat', [ChatController::class, 'chat'])->name('chat');
 
-Route::get('pdf/{promptId}', [ChatController::class, 'pdfGenerator'])->name('pdf');
+Route::get('pdf/{chat:id}', [ChatController::class, 'pdfGenerator'])->name('pdf');
